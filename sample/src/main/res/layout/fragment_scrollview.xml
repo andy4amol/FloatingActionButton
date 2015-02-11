@@ -17,7 +17,7 @@
             android:divider="@drawable/divider"/>
     </com.melnykov.fab.ObservableScrollView>
 
-    <com.melnykov.fab.FloatingActionButton
+    <com.melnykov.fab.FloatingActionView
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

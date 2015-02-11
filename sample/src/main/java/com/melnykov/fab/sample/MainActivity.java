@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.FloatingActionView;
 import com.melnykov.fab.ObservableScrollView;
 import com.melnykov.fab.ScrollDirectionListener;
 
@@ -119,32 +119,33 @@ public class MainActivity extends ActionBarActivity {
 
     public static class ListViewFragment extends Fragment {
 
+
+        private View root;
         @SuppressLint("InflateParams")
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View root = inflater.inflate(R.layout.fragment_listview, container, false);
+            root = inflater.inflate(R.layout.fragment_listview, container, false);
 
             ListView list = (ListView) root.findViewById(android.R.id.list);
-            ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
-                getResources().getStringArray(R.array.countries));
+            ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),getResources().getStringArray(R.array.countries));
             list.setAdapter(listAdapter);
 
-            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-            fab.attachToListView(list, new ScrollDirectionListener() {
-                @Override
-                public void onScrollDown() {
-                    Log.d("ListViewFragment", "onScrollDown()");
-                }
-
-                @Override
-                public void onScrollUp() {
-                    Log.d("ListViewFragment", "onScrollUp()");
-                }
-            });
+            initFloatingMenu();
+            FloatingActionMenu fab = (FloatingActionMenu) root.findViewById(R.id.fab);
+            fab.attachToListView(list);
 
             return root;
         }
+        private void initFloatingMenu() {
+            FloatingActionMenu fam = (FloatingActionMenu)root.findViewById(R.id.fab);
+            fam.addItem(1, "相册", 0, "", true);
+            fam.addItem(1, "说说", 0, "", false);
+            fam.addItem(1, "个性化", 0, "", false);
+            fam.addItem(1, "与我相关", 0, "", false);
+        }
     }
+
+
 
     public static class RecyclerViewFragment extends Fragment {
         @Override
@@ -161,8 +162,8 @@ public class MainActivity extends ActionBarActivity {
                 .getStringArray(R.array.countries));
             recyclerView.setAdapter(adapter);
 
-            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-            fab.attachToRecyclerView(recyclerView);
+            FloatingActionView fab = (FloatingActionView) root.findViewById(R.id.fab);
+            //fab.attachToRecyclerView(recyclerView);
 
             return root;
         }
@@ -188,7 +189,7 @@ public class MainActivity extends ActionBarActivity {
                 list.addView(textView);
             }
 
-            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+            FloatingActionView fab = (FloatingActionView) root.findViewById(R.id.fab);
             fab.attachToScrollView(scrollView);
 
             return root;
